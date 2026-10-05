@@ -19,7 +19,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: hashicorp/setup-terraform@v4
       - run: terraform init -backend-config="key=dev.tfstate" #create a dev env state file in the s3 bucket
-      - run: terraform apply -auto-approve -var-file=envs/dev.tfvars
+      - run: terraform destroy -auto-approve -var-file=envs/dev.tfvars
       
 
   staging:
@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v7
       - uses: hashicorp/setup-terraform@v4
       - run: terraform init -backend-config="key=staging.tfstate" #create a staging env state file in the s3 bucket
-      - run: terraform apply -auto-approve -var-file=envs/staging.tfvars
+      - run: terraform destroy -auto-approve -var-file=envs/staging.tfvars
 
   prod:
     needs: staging
@@ -46,4 +46,4 @@ jobs:
       - uses: actions/checkout@v7
       - uses: hashicorp/setup-terraform@v4
       - run: terraform init -backend-config="key=prod.tfstate" #create a prod env state file in the s3 bucket
-      - run: terraform apply -auto-approve -var-file=envs/prod.tfvars
+      - run: terraform destroy -auto-approve -var-file=envs/prod.tfvars
